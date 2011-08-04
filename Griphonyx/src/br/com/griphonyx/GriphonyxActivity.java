@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 import br.com.grif.R;
-import br.com.griphonyx.dao.Filmes;
-import br.com.griphonyx.jdbc.FilmeJdbc;
+import br.com.griphonyx.dao.Movie;
+import br.com.griphonyx.jdbc.MovieJdbc;
 
 public class GriphonyxActivity extends Activity {
 
@@ -45,10 +45,10 @@ public class GriphonyxActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				FilmeJdbc filmeJdbc = new FilmeJdbc();
-				ArrayList<Filmes> lista = filmeJdbc.listaFilme(ctx,text.getText().toString());
-				for(Filmes ag : lista){
-					data.add("Filme: "+ag.getNomeFilme()+" Nota: "+ag.getNota());
+				MovieJdbc filmeJdbc = new MovieJdbc();
+				ArrayList<Movie> lista = filmeJdbc.listaFilme(ctx,text.getText().toString());
+				for(Movie ag : lista){
+					data.add(ag);
 					adapter.notifyDataSetChanged();
 				}
 			}
@@ -58,11 +58,17 @@ public class GriphonyxActivity extends Activity {
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				AlertDialog.Builder adb=new AlertDialog.Builder(GriphonyxActivity.this);
-				adb.setTitle("LVSelectedItemExample");
-				adb.setMessage("Selected Item is = "+list.getItemAtPosition(position));
-				adb.setPositiveButton("Ok", null);
-				adb.show();
+								
+				MovieJdbc filmeJdbc = new MovieJdbc();
+				Intent i = new Intent(GriphonyxActivity.this, ReviewActivity.class);
+								
+				String titleMovie = ((Movie)list.getItemAtPosition(position)).getNomeFilme();
+				String reviewMovie = filmeJdbc.getReview(GriphonyxActivity.this, titleMovie);
+				boolean seeMovie = ((Movie)list.getItemAtPosition(position)).isAssistido();
+				i.putExtra("review", reviewMovie);
+				i.putExtra("rating", seeMovie);
+				startActivity(i);
+				
 			}
 		});
 	}
