@@ -3,6 +3,7 @@ package br.com.griphonyx;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import br.com.grif.R;
 
@@ -10,7 +11,7 @@ public class ReviewActivity extends Activity {
 	
 	private Intent intent;
 	private String review;
-	private boolean seeMovie;
+	private boolean see;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -18,13 +19,15 @@ public class ReviewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.review);
 		
-		//recebe a intent enviada
 		intent = getIntent();
-		//armazena os números digitados
 		review = "Review: "+intent.getStringExtra("review");
-		seeMovie = intent.getBooleanExtra("seeMovie",false);
+		see = intent.getBooleanExtra("see",false);
 		
-		EditText text = (EditText) findViewById(R.id.reviewText);
-		text.setText(review);			
+		EditText reviewMovie = (EditText) findViewById(R.id.reviewText);
+		CheckBox seeMovie = (CheckBox) findViewById(R.id.seeMovie);
+		
+		reviewMovie.setText(this.review);
+		System.out.println("Assistido: "+see);
+		seeMovie.setSelected(see);
 	}
 }

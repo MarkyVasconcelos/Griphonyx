@@ -22,7 +22,7 @@ public class MovieJdbc {
 				agenda.setNomeFilme(c.getString(c.getColumnIndex("o_title")));
 				agenda.setSinopse(c.getString(c.getColumnIndex("plot")));
 				agenda.setNota(c.getInt(c.getColumnIndex("rating")));
-				agenda.setAssistido(c.getString(c.getColumnIndex("seen")).equals("1")?true:false);
+				agenda.setAssistido(c.getInt(c.getColumnIndex("seen"))==1?true:false);
 				lista.add(agenda);
 			} while (c.moveToNext());
 		}

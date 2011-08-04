@@ -4,7 +4,8 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:weightSum="1">
-    <EditText android:layout_width="match_parent" android:inputType="textMultiLine" android:layout_height="match_parent" android:id="@+id/reviewText">
+    <CheckBox android:layout_width="wrap_content" android:text="Assistido" android:layout_height="wrap_content" android:id="@+id/seeMovie"></CheckBox>
+    <EditText android:layout_width="match_parent" android:inputType="textMultiLine" android:id="@+id/reviewText" android:layout_height="match_parent" android:scrollbarAlwaysDrawVerticalTrack="true">
         <requestFocus></requestFocus>
     </EditText>
     
