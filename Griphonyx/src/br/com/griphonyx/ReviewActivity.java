@@ -27,7 +27,12 @@ public class ReviewActivity extends Activity {
 		CheckBox seeMovie = (CheckBox) findViewById(R.id.seeMovie);
 		
 		reviewMovie.setText(this.review);
-		System.out.println("Assistido: "+see);
 		seeMovie.setSelected(see);
+		seeMovie.setChecked(see);
+				
+		Intent ratingActivity = new Intent(ReviewActivity.this, RatingActivity.class);
+				
+		ratingActivity.putExtra("rating", intent.getFloatExtra("rating", 0));
+		startActivity(ratingActivity);
 	}
 }

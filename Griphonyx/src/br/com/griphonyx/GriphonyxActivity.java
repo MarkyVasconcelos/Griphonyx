@@ -1,11 +1,12 @@
 package br.com.griphonyx;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,13 +21,27 @@ import br.com.griphonyx.jdbc.MovieJdbc;
 
 public class GriphonyxActivity extends Activity {
 
-	Context ctx;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		ctx = this;
+		
+    	DataBaseHelper myDbHelper;
+    	myDbHelper = new DataBaseHelper(this);
+ 
+    	try {
+    		myDbHelper.createDataBase();
+    	} catch (IOException ioe) {
+    		throw new Error("Não foi possível criar o banco de dados.");
+    	}
+ 
+    	try {
+    		myDbHelper.openDataBase();
+    	} catch (SQLException sqle){
+    		throw sqle;
+    	}
+		
 		botao();
 	}
 
@@ -46,7 +61,7 @@ public class GriphonyxActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				MovieJdbc filmeJdbc = new MovieJdbc();
-				ArrayList<Movie> lista = filmeJdbc.listaFilme(ctx,text.getText().toString());
+				ArrayList<Movie> lista = filmeJdbc.listaFilme(GriphonyxActivity.this,text.getText().toString());
 				for(Movie ag : lista){
 					data.add(ag);
 					adapter.notifyDataSetChanged();
@@ -60,15 +75,17 @@ public class GriphonyxActivity extends Activity {
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 								
 				MovieJdbc filmeJdbc = new MovieJdbc();
-				Intent i = new Intent(GriphonyxActivity.this, ReviewActivity.class);
+				Intent reviewActivity = new Intent(GriphonyxActivity.this, ReviewActivity.class);
 								
 				String titleMovie = ((Movie)list.getItemAtPosition(position)).getNomeFilme();
 				String reviewMovie = filmeJdbc.getReview(GriphonyxActivity.this, titleMovie);
 				boolean seeMovie = ((Movie)list.getItemAtPosition(position)).isAssistido();
-				i.putExtra("review", reviewMovie);
-				System.out.println(seeMovie);
-				i.putExtra("see", seeMovie);
-				startActivity(i);
+				float rating = ((Movie)list.getItemAtPosition(position)).getNota();
+				
+				reviewActivity.putExtra("review", reviewMovie);
+				reviewActivity.putExtra("see", seeMovie);
+				reviewActivity.putExtra("rating", rating);
+				startActivity(reviewActivity);
 				
 			}
 		});
