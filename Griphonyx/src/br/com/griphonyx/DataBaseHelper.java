@@ -66,7 +66,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
  
     	try {
     		String myPath = DB_PATH + DB_NAME;
-    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
      	} catch (SQLiteException e) {
      		// database does't exist yet.
      	}
@@ -111,7 +111,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     public void openDataBase() throws SQLException{
      	// Open the database
         String myPath = DB_PATH + DB_NAME;
-        dbHandle = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        dbHandle = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
      }
  
     @Override
