@@ -80,7 +80,7 @@ public class GriphonyxActivity extends Activity {
 				String titleMovie = ((Movie)list.getItemAtPosition(position)).getNomeFilme();
 				String reviewMovie = filmeJdbc.getReview(GriphonyxActivity.this, titleMovie);
 				boolean seeMovie = ((Movie)list.getItemAtPosition(position)).isAssistido();
-				float rating = ((Movie)list.getItemAtPosition(position)).getNota();
+				double rating = ((Movie)list.getItemAtPosition(position)).getNota();
 				
 				reviewActivity.putExtra("review", reviewMovie);
 				reviewActivity.putExtra("see", seeMovie);

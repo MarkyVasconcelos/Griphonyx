@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout android:id="@+id/RelativeLayout1"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:weightSum="1">
-    <CheckBox android:layout_width="wrap_content" android:text="Assistido" android:layout_height="wrap_content" android:id="@+id/seeMovie"></CheckBox>
-    <EditText android:layout_width="match_parent" android:inputType="textMultiLine" android:id="@+id/reviewText" android:layout_height="match_parent" android:scrollbarAlwaysDrawVerticalTrack="true">
+    <CheckBox android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="wrap_content" android:text="Assistido" android:layout_height="wrap_content" android:id="@+id/seeMovie"></CheckBox>
+    <EditText android:layout_alignParentLeft="true" android:layout_below="@+id/seeMovie" android:layout_width="match_parent" android:inputType="textMultiLine" android:id="@+id/reviewText" android:layout_height="match_parent" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_above="@+id/oBtRating">
         <requestFocus></requestFocus>
     </EditText>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rating" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true" android:layout_alignParentRight="true" android:id="@+id/oBtRating"></Button>
     
-</LinearLayout>
+</RelativeLayout>
